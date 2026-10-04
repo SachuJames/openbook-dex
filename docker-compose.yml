@@ -1,0 +1,26 @@
+# Local demo stack. The Docker daemon was not available in the build
+# environment, so these images were authored but never built or run here.
+services:
+  engine:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.engine
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    ports:
+      - "3001:3001"
+    environment:
+      ENGINE_BIN: /usr/local/bin/openbook-engine
+      RPC_URL: http://chain:8545
+    depends_on:
+      - engine
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.web
+    ports:
+      - "8080:80"
+    depends_on:
+      - api

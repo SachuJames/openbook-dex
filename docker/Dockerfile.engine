@@ -1,0 +1,10 @@
+# Matching engine image.
+FROM rust:1.89-slim AS build
+WORKDIR /build
+COPY Cargo.toml ./
+COPY crates/matching-engine ./crates/matching-engine
+RUN cargo build --release -p openbook-engine
+
+FROM debian:bookworm-slim
+COPY --from=build /build/target/release/openbook-engine /usr/local/bin/openbook-engine
+ENTRYPOINT ["openbook-engine"]
