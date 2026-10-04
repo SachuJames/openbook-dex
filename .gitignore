@@ -30,3 +30,4 @@ contracts/typechain-types/
 
 # Demo artifacts
 *.log
+deploy.json

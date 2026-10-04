@@ -9,11 +9,11 @@
   "scripts": {
     "test": "vitest run",
     "build": "tsc -p .",
-    "start": "node dist/index.js"
+    "start": "node dist/src/index.js"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Sachu James",
+  "license": "MIT",
   "type": "module",
   "dependencies": {
     "@fastify/websocket": "^11.3.3",

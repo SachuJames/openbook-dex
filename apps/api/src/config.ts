@@ -1,7 +1,9 @@
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 
-const here = path.dirname(fileURLToPath(import.meta.url));
+// Resolve paths from the repo root. The server is run with the working
+// directory set to apps/api (npm run start, npm run dev, vitest), so the
+// repo root is two levels up. Both paths can be overridden via env.
+const repoRoot = path.resolve(process.cwd(), "..", "..");
 
 export const config = {
   host: process.env.API_HOST ?? "127.0.0.1",
@@ -14,15 +16,15 @@ export const config = {
   settlerKey: process.env.SETTLER_KEY,
   engineBin:
     process.env.ENGINE_BIN ??
-    path.resolve(here, "..", "..", "target", "release", "openbook-engine"),
-  settlementArtifact: path.resolve(
-    here,
-    "..",
-    "..",
-    "contracts",
-    "artifacts",
-    "contracts",
-    "Settlement.sol",
-    "Settlement.json",
-  ),
+    path.join(repoRoot, "target", "release", "openbook-engine"),
+  settlementArtifact:
+    process.env.SETTLEMENT_ARTIFACT ??
+    path.join(
+      repoRoot,
+      "contracts",
+      "artifacts",
+      "contracts",
+      "Settlement.sol",
+      "Settlement.json",
+    ),
 };
