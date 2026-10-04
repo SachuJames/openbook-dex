@@ -1,0 +1,22 @@
+[package]
+name = "openbook-engine"
+version = "0.1.0"
+edition = "2021"
+description = "OpenBook central limit order book matching engine (newline-delimited JSON stdio protocol)"
+license = "MIT"
+
+[[bin]]
+name = "openbook-engine"
+path = "src/main.rs"
+
+[[bin]]
+name = "bench"
+path = "src/bin/bench.rs"
+
+[lib]
+name = "openbook_engine"
+path = "src/lib.rs"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
