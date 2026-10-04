@@ -1,0 +1,32 @@
+# Rust
+target/
+Cargo.lock
+
+# Node
+node_modules/
+dist/
+.next/
+*.tsbuildinfo
+
+# Python / misc
+__pycache__/
+*.pyc
+.venv/
+
+# Hardhat
+contracts/artifacts/
+contracts/cache/
+contracts/typechain-types/
+
+# Env and secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+*.swp
+*~
+
+# Demo artifacts
+*.log
