@@ -1,0 +1,413 @@
+/* OpenBook trading UI. Dark terminal styling, plain CSS. */
+
+:root {
+  --bg: #0b0e14;
+  --panel: #11151d;
+  --panel-border: #1f2632;
+  --text: #d7dee9;
+  --muted: #6b7688;
+  --buy: #26a69a;
+  --sell: #ef5350;
+  --accent: #4f8ff7;
+  --radius: 10px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Header */
+
+.topbar {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--panel-border);
+  background: var(--panel);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4f8ff7, #26a69a);
+  color: #fff;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.brand-name {
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.symbol-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+}
+
+select,
+input,
+button {
+  font: inherit;
+}
+
+select,
+input[type="text"],
+input[type="password"] {
+  background: var(--bg);
+  color: var(--text);
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+}
+
+select:disabled,
+input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.status {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+
+.dot.live {
+  background: var(--buy);
+  box-shadow: 0 0 6px var(--buy);
+}
+
+.dot.connecting {
+  background: #ffb300;
+  animation: pulse 1.2s infinite;
+}
+
+.dot.closed {
+  background: var(--sell);
+  animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+/* Layout */
+
+.layout {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 320px 1fr;
+  gap: 12px;
+  padding: 12px 20px;
+  max-width: 1400px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+@media (max-width: 1000px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  min-height: 200px;
+}
+
+.panel h2 {
+  margin: 0 0 12px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.error {
+  color: var(--sell);
+  margin: 10px 0 0;
+}
+
+/* Order book */
+
+.book-header {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 0 4px 6px;
+}
+
+.book-row {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 4px;
+  overflow: hidden;
+}
+
+.book-row .bar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0.18;
+}
+
+.book-side.bid .bar {
+  background: var(--buy);
+}
+
+.book-side.ask .bar {
+  background: var(--sell);
+}
+
+.book-row .price,
+.book-row .qty {
+  position: relative;
+  z-index: 1;
+}
+
+.book-side.bid .price {
+  color: var(--buy);
+}
+
+.book-side.ask .price {
+  color: var(--sell);
+}
+
+.spread {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 4px;
+  margin: 6px 0;
+  border-top: 1px dashed var(--panel-border);
+  border-bottom: 1px dashed var(--panel-border);
+  color: var(--muted);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Order form */
+
+.order-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.toggle {
+  display: flex;
+  gap: 6px;
+}
+
+.toggle button {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid var(--panel-border);
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+}
+
+.toggle button.active {
+  color: #fff;
+  border-color: var(--accent);
+  background: rgba(79, 143, 247, 0.15);
+}
+
+.toggle button.active.buy {
+  border-color: var(--buy);
+  background: rgba(38, 166, 154, 0.18);
+}
+
+.toggle button.active.sell {
+  border-color: var(--sell);
+  background: rgba(239, 83, 80, 0.18);
+}
+
+.order-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.demo-only {
+  color: #ffb300;
+  font-size: 11px;
+}
+
+.submit {
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 4px;
+}
+
+.submit.buy {
+  background: var(--buy);
+}
+
+.submit.sell {
+  background: var(--sell);
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.result {
+  margin-top: 12px;
+  padding: 10px;
+  border: 1px solid var(--panel-border);
+  border-radius: 6px;
+  background: var(--bg);
+}
+
+.result code {
+  color: var(--accent);
+}
+
+.result ul {
+  margin: 8px 0 0;
+  padding-left: 18px;
+}
+
+.cancel-box {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--panel-border);
+}
+
+.cancel-box h3 {
+  margin: 0 0 8px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--muted);
+}
+
+.cancel-row {
+  display: flex;
+  gap: 8px;
+}
+
+.cancel-row input {
+  flex: 1;
+}
+
+.cancel-row button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: 1px solid var(--panel-border);
+  background: var(--bg);
+  color: var(--text);
+  cursor: pointer;
+}
+
+/* Recent trades */
+
+.trade-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.trade-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 8px;
+  padding: 4px 2px;
+  border-bottom: 1px solid rgba(31, 38, 50, 0.6);
+  align-items: baseline;
+}
+
+.trade-row:last-child {
+  border-bottom: none;
+}
+
+.trade-price {
+  color: var(--accent);
+}
+
+.trade-parties {
+  grid-column: 1 / -1;
+  font-size: 11px;
+}
+
+/* Footer */
+
+.footnote {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 20px;
+  border-top: 1px solid var(--panel-border);
+  color: var(--muted);
+  font-size: 11px;
+}
